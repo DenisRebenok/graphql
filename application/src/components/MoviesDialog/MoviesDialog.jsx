@@ -28,7 +28,7 @@ class MoviesDialog extends React.Component {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {'Are you sire that you want to delete element?'}
+          {'Are you sure that you want to delete element?'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
