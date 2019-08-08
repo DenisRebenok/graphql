@@ -13,7 +13,12 @@ const withGraphql = compose(
       addDirector: director =>
         mutate({
           variables: director,
-          refetchQueries: [{ query: directorsQuery }]
+          refetchQueries: [
+            {
+              query: directorsQuery,
+              variables: { name: '' }
+            }
+          ]
         })
     })
   }),
@@ -22,7 +27,12 @@ const withGraphql = compose(
       updateDirector: director =>
         mutate({
           variables: director,
-          refetchQueries: [{ query: directorsQuery }]
+          refetchQueries: [
+            {
+              query: directorsQuery,
+              variables: { name: '' }
+            }
+          ]
         })
     })
   })
