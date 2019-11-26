@@ -1,80 +1,80 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Checkbox from '@material-ui/core/Checkbox';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CreateIcon from '@material-ui/icons/Create';
+import React from 'react'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Checkbox from '@material-ui/core/Checkbox'
+import MoreIcon from '@material-ui/icons/MoreVert'
+import IconButton from '@material-ui/core/IconButton'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import DeleteIcon from '@material-ui/icons/Delete'
+import CreateIcon from '@material-ui/icons/Create'
 
-import MoviesDialog from '../MoviesDialog/MoviesDialog';
-import MoviesSearch from '../MoviesSearch/MoviesSearch';
+import MoviesDialog from '../MoviesDialog/MoviesDialog.js'
+import MoviesSearch from '../MoviesSearch/MoviesSearch.js'
 
-import withHocs from './MoviesTableHoc';
+import withHocs from './MoviesTableHoc'
 
 class MoviesTable extends React.Component {
   state = {
     anchorEl: null,
     openDialog: false,
     name: ''
-  };
+  }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
+    this.setState({ [name]: event.target.value })
+  }
 
   handleSearch = e => {
-    const { data } = this.props;
-    const { name } = this.state;
+    const { data } = this.props
+    const { name } = this.state
 
     if (e.charCode === 13) {
       data.fetchMore({
         variables: { name },
         updateQuery: (previousResult, { fetchMoreResult }) => fetchMoreResult
-      });
+      })
     }
-  };
+  }
 
   handleDialogOpen = () => {
-    this.setState({ openDialog: true });
-  };
+    this.setState({ openDialog: true })
+  }
   handleDialogClose = () => {
-    this.setState({ openDialog: false });
-  };
+    this.setState({ openDialog: false })
+  }
 
   handleClick = ({ currentTarget }, data) => {
     this.setState({
       anchorEl: currentTarget,
       data
-    });
-  };
+    })
+  }
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+    this.setState({ anchorEl: null })
+  }
 
   handleEdit = () => {
-    this.props.onOpen(this.state.data);
-    this.handleClose();
-  };
+    this.props.onOpen(this.state.data)
+    this.handleClose()
+  }
 
   handleDelete = () => {
-    this.handleDialogOpen();
-    this.handleClose();
-  };
+    this.handleDialogOpen()
+    this.handleClose()
+  }
 
   render() {
-    const { anchorEl, openDialog, data: activeElem = {}, name } = this.state;
+    const { anchorEl, openDialog, data: activeElem = {}, name } = this.state
 
-    const { classes, data = {} } = this.props;
+    const { classes, data = {} } = this.props
 
-    const { movies = [] } = data;
+    const { movies = [] } = data
 
     return (
       <>
@@ -139,14 +139,14 @@ class MoviesTable extends React.Component {
                       </>
                     </TableCell>
                   </TableRow>
-                );
+                )
               })}
             </TableBody>
           </Table>
         </Paper>
       </>
-    );
+    )
   }
 }
 
-export default withHocs(MoviesTable);
+export default withHocs(MoviesTable)
