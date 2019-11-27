@@ -5,6 +5,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import Checkbox from '@material-ui/core/Checkbox'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import IconButton from '@material-ui/core/IconButton'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -12,12 +13,12 @@ import Menu from '@material-ui/core/Menu'
 import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
 
-import DirectorsDialog from '../DirectorsDialog/DirectorsDialog.js'
-import DirectorsSearch from '../DirectorsSearch/DirectorsSearch.js'
+import MoviesDialog from '../MoviesDialog/MoviesDialog'
+import MoviesSearch from '../MoviesSearch/MoviesSearch'
 
-import withHocs from './DirectorsTableHoc'
+import withHocs from './MoviesTableHoc'
 
-class DirectorsTable extends React.Component {
+class MoviesTable extends React.Component {
   state = {
     anchorEl: null,
     openDialog: false,
@@ -58,7 +59,7 @@ class DirectorsTable extends React.Component {
     this.setState({ anchorEl: null })
   }
 
-  handleEdit = row => {
+  handleEdit = () => {
     this.props.onOpen(this.state.data)
     this.handleClose()
   }
@@ -70,19 +71,21 @@ class DirectorsTable extends React.Component {
 
   render() {
     const { anchorEl, openDialog, data: activeElem = {}, name } = this.state
+
     const { classes, data = {} } = this.props
-    const { directors = [] } = data
+
+    const { movies = [] } = data
 
     return (
       <>
         <Paper>
-          <DirectorsSearch
+          <MoviesSearch
             name={name}
             handleChange={this.handleChange}
             handleSearch={this.handleSearch}
           />
         </Paper>
-        <DirectorsDialog
+        <MoviesDialog
           open={openDialog}
           handleClose={this.handleDialogClose}
           id={activeElem.id}
@@ -92,32 +95,31 @@ class DirectorsTable extends React.Component {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell align="right">Age</TableCell>
-                <TableCell>Movies</TableCell>
-                <TableCell />
+                <TableCell>Genre</TableCell>
+                <TableCell align="right">Rate</TableCell>
+                <TableCell>Director</TableCell>
+                <TableCell>Watched</TableCell>
+                <TableCell align="right" />
               </TableRow>
             </TableHead>
             <TableBody>
-              {directors.map(director => {
+              {movies.map(movie => {
                 return (
-                  <TableRow key={director.id}>
+                  <TableRow key={movie.id}>
                     <TableCell component="th" scope="row">
-                      {director.name}
+                      {movie.name}
                     </TableCell>
-                    <TableCell align="right">{director.age}</TableCell>
+                    <TableCell>{movie.genre}</TableCell>
+                    <TableCell align="right">{movie.rate}</TableCell>
+                    <TableCell>{movie.director.name}</TableCell>
                     <TableCell>
-                      {director.movies.map((movie, key) => (
-                        <div key={movie.name}>
-                          {`${key + 1}. `}
-                          {movie.name}
-                        </div>
-                      ))}
+                      <Checkbox checked={movie.watched} disabled />
                     </TableCell>
                     <TableCell align="right">
                       <>
                         <IconButton
                           color="inherit"
-                          onClick={e => this.handleClick(e, director)}
+                          onClick={e => this.handleClick(e, movie)}
                         >
                           <MoreIcon />
                         </IconButton>
@@ -127,7 +129,7 @@ class DirectorsTable extends React.Component {
                           open={Boolean(anchorEl)}
                           onClose={this.handleClose}
                         >
-                          <MenuItem onClick={() => this.handleEdit(director)}>
+                          <MenuItem onClick={this.handleEdit}>
                             <CreateIcon /> Edit
                           </MenuItem>
                           <MenuItem onClick={this.handleDelete}>
@@ -147,4 +149,4 @@ class DirectorsTable extends React.Component {
   }
 }
 
-export default withHocs(DirectorsTable)
+export default withHocs(MoviesTable)

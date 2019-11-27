@@ -1,12 +1,13 @@
 const express = require('express')
 const graphqlHTTP = require('express-graphql')
-const schema = require('../schema/schema')
+const schema = require('./schema')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 require('dotenv').config()
 
 const app = express()
-const PORT = 3005
+const PORT = process.env.PORT || 3005
 
 mongoose.connect(
   process.env.DB_URI,
@@ -23,6 +24,12 @@ const dbConnection = mongoose.connection
 dbConnection.on('error', err => console.log(`Connection error: ${err}`))
 dbConnection.once('open', () => console.log('Connected to DB!'))
 
-app.listen(PORT, err => {
-  err ? console.log(err) : console.log('Server started!')
+app.use(express.static(path.join(__dirname, 'dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
+
+app.listen(PORT, err =>
+  console.log(err ? err : `Server started on port ${PORT}`)
+)

@@ -7,8 +7,8 @@ import SwipeableViews from 'react-swipeable-views'
 import MovieCreationIcon from '@material-ui/icons/MovieCreation'
 import CameraIcon from '@material-ui/icons/Camera'
 
-import Movies from '../Movies/Movies.js'
-import Directors from '../Directors/Directors.js'
+import Movies from '../Movies/Movies'
+import Directors from '../Directors/Directors'
 
 import withHocs from './TabsHoc'
 

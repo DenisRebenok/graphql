@@ -2,8 +2,8 @@ import React from 'react'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 
-import MoviesTable from '../MoviesTable/MoviesTable.js'
-import MoviesForm from '../MoviesForm/MoviesForm.js'
+import MoviesTable from '../MoviesTable/MoviesTable'
+import MoviesForm from '../MoviesForm/MoviesForm'
 
 import withHocs from './MoviesHoc'
 
